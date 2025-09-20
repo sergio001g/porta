@@ -70,7 +70,7 @@ export const metadata = {
     description: "Portafolio profesional de Sergio Gómez, desarrollador Full Stack.",
     images: ["/favicon.jpg"],
   },
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 export default function RootLayout({
@@ -85,6 +85,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.jpg" />
         <meta name="theme-color" content="#3B82F6" />
+
+        {/* 👇 Meta de verificación de Google Search Console */}
+        <meta
+          name="google-site-verification"
+          content="9HZuZQJ788KLpJiWLG4dE2d3s_qQpIbLKB4mfO8wpjg"
+        />
       </head>
       <body className={`${inter.className} ${pressStart2P.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
