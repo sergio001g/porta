@@ -11,20 +11,41 @@ import { useInView } from "react-intersection-observer"
 import { TechIcon } from "./tech-icons"
 import { useState } from "react"
 
-const featuredProject = {
-  title: "DJ-BEE - Plataforma Musical",
-  titleEn: "DJ-BEE - Music Platform",
-  description:
-    "Experiencia de DJ Virtual Futurista con Marshmello y personajes 3D. Plataforma interactiva para DJs con efectos visuales avanzados y controles profesionales.",
-  descriptionEn:
-    "Futuristic Virtual DJ Experience with Marshmello and 3D characters. Interactive platform for DJs with advanced visual effects and professional controls.",
-  image: "/images/dj-bee-preview.png",
-  tech: ["React", "TypeScript", "CSS", "JavaScript"],
-  link: "https://github.com/sergio001g/DJ-BEE",
-  preview: "https://dj-bee11-sergio001gs-projects.vercel.app/",
-}
-
 const projects = [
+  {
+    title: "CSER - Autoclicker Minimalista",
+    titleEn: "CSER - Minimalist Autoclicker",
+    description:
+      "Autoclicker minimalista para automatizar clicks con control de CPS, tipo de click y hotkeys. Ideal para Minecraft.",
+    descriptionEn:
+      "A minimalist autoclicker to automate clicks with CPS control, click type, and hotkeys. Great for Minecraft.",
+    image: "/images/cser-preview.png",
+    tech: ["React", "TypeScript", "CSS", "JavaScript"],
+    preview: "https://cser-web-tau.vercel.app/",
+  },
+  {
+    title: "NOTEMA - Notas Minimalistas (Electron)",
+    titleEn: "NOTEMA - Minimal Notes (Electron)",
+    description:
+      "Aplicación de notas minimalista en Electron con editor, panel lateral y herramientas de mapas conceptuales.",
+    descriptionEn:
+      "A minimalist Electron notes app with an editor, sidebar, and concept map tools.",
+    image: "/images/notema-preview.png",
+    tech: ["JavaScript", "HTML", "CSS"],
+    link: "https://github.com/sergio001g/electron-notas-minimalistas-",
+  },
+  {
+    title: "DJ-BEE - Plataforma Musical",
+    titleEn: "DJ-BEE - Music Platform",
+    description:
+      "Experiencia de DJ Virtual Futurista con Marshmello y personajes 3D. Plataforma interactiva para DJs con efectos visuales avanzados y controles profesionales.",
+    descriptionEn:
+      "Futuristic Virtual DJ Experience with Marshmello and 3D characters. Interactive platform for DJs with advanced visual effects and professional controls.",
+    image: "/images/dj-bee-preview.png",
+    tech: ["React", "TypeScript", "CSS", "JavaScript"],
+    link: "https://github.com/sergio001g/DJ-BEE",
+    preview: "https://dj-bee11-sergio001gs-projects.vercel.app/",
+  },
   {
     title: "Paleta de Colores para UX/UI",
     titleEn: "Color Palette for UX/UI",
@@ -100,109 +121,8 @@ export default function Projects() {
         {t("projects.title")}
       </motion.h2>
 
-      {/* Featured Project */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <Card className="overflow-hidden bg-[#1E3A8A] border-2 border-[#3B82F6] relative">
-          <div className="absolute top-4 right-4 z-10">
-            <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold animate-pulse">
-              ⭐ {language === "es" ? "DESTACADO" : "FEATURED"}
-            </Badge>
-          </div>
-          <CardHeader className="space-y-2">
-            <CardTitle className="text-3xl text-[#60A5FA]">
-              {language === "es" ? featuredProject.title : featuredProject.titleEn}
-            </CardTitle>
-            <CardDescription className="text-[#93C5FD] text-lg">
-              {language === "es" ? featuredProject.description : featuredProject.descriptionEn}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <motion.div
-              className="relative aspect-video overflow-hidden rounded-xl cursor-pointer group"
-              onClick={() => setSelectedImage(featuredProject.image)}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              style={{ willChange: "transform" }}
-            >
-              <Image
-                src={featuredProject.image || "/placeholder.svg"}
-                alt={language === "es" ? featuredProject.title : featuredProject.titleEn}
-                layout="fill"
-                objectFit="cover"
-                className="transition-transform group-hover:scale-110 duration-500 will-change-transform"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-white font-semibold">🎵 DJ Virtual con Marshmello</p>
-                </div>
-              </div>
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <Eye className="w-12 h-12 text-white" />
-              </div>
-            </motion.div>
-            <div className="flex flex-wrap gap-2">
-              {featuredProject.tech.map((tech) => (
-                <motion.div
-                  key={tech}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <Badge variant="secondary" className="bg-[#2563EB] text-white flex items-center gap-1">
-                    <TechIcon name={tech} />
-                    {tech}
-                  </Badge>
-                </motion.div>
-              ))}
-            </div>
-            <div className="flex gap-4">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full bg-[#3B82F6] text-white hover:bg-[#2563EB]"
-                  asChild
-                >
-                  <a
-                    href={featuredProject.preview}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    {language === "es" ? "Ver Plataforma" : "View Platform"}
-                  </a>
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full bg-[#3B82F6] text-white hover:bg-[#2563EB]"
-                  asChild
-                >
-                  <a
-                    href={featuredProject.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2"
-                  >
-                    <Github className="w-4 h-4" />
-                    GitHub
-                  </a>
-                </Button>
-              </motion.div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      <motion.div
-        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         ref={ref}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
@@ -216,7 +136,7 @@ export default function Projects() {
           },
         }}
       >
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <motion.div
             key={project.title}
             variants={{

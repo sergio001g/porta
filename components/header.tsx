@@ -17,9 +17,9 @@ export function Header() {
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
-      <nav className="flex items-center justify-between px-6 py-2 bg-background/80 backdrop-blur-sm rounded-full shadow-lg">
+      <nav className="flex items-center justify-between px-6 py-2 bg-background/70 backdrop-blur-md rounded-full shadow-lg ring-1 ring-border/40">
         <div className="flex items-center gap-6 text-sm">
-          {['about', 'projects', 'skills'].map((item) => (
+          {['about', 'projects'].map((item) => (
             <motion.a
               key={item}
               href={`#${item}`}

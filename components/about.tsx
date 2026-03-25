@@ -10,7 +10,6 @@ const aboutContent = {
     rol: '"Desarrollador Full Stack"',
     educacion: '"Universidad Tecnológica Equinoccial (UTE), Ecuador"',
     pasiones: ['"Desarrollo web"', '"Nuevas tecnologías"', '"Resolución de problemas"'],
-    habilidades: ['HTML', 'CSS', 'JavaScript', 'React', 'TailwindCSS', 'Git', 'Python', 'TypeScript', 'Next.js', 'Node.js'],
     motto: '"Creando soluciones innovadoras y eficientes"'
   },
   en: {
@@ -18,7 +17,6 @@ const aboutContent = {
     rol: '"Full Stack Developer"',
     educacion: '"Universidad Tecnológica Equinoccial (UTE), Ecuador"',
     pasiones: ['"Web development"', '"New technologies"', '"Problem solving"'],
-    habilidades: ['HTML', 'CSS', 'JavaScript', 'React', 'TailwindCSS', 'Git', 'Python', 'TypeScript', 'Next.js', 'Node.js'],
     motto: '"Creating innovative and efficient solutions"'
   }
 }
@@ -91,17 +89,6 @@ export default function About() {
               {index < content.pasiones.length - 1 ? ', ' : ''}
             </span>
           ))}
-          ],
-        </motion.div>
-        <motion.div variants={itemVariants} className="pl-4">
-          <span className="text-[#F472B6]">habilidades:</span> [
-        </motion.div>
-        {content.habilidades.map((skill, index) => (
-          <motion.div key={skill} variants={itemVariants} className="pl-8">
-            <span className="text-[#34D399]">"{skill}"</span>{index < content.habilidades.length - 1 ? ',' : ''}
-          </motion.div>
-        ))}
-        <motion.div variants={itemVariants} className="pl-4">
           ],
         </motion.div>
         <motion.div variants={itemVariants} className="pl-4">

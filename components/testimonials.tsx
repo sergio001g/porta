@@ -91,7 +91,7 @@ export default function Testimonials() {
                   </div>
                 </div>
                 <p className="text-[#F9FAFB] flex-grow">
-                  "{language === 'es' ? testimonial.content : testimonial.contentEn}"
+                  &quot;{language === 'es' ? testimonial.content : testimonial.contentEn}&quot;
                 </p>
               </CardContent>
             </Card>

@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="relative">
       <StarryBackground />
-      <div className="container mx-auto px-4 space-y-24 py-16">
+      <div className="max-w-6xl mx-auto px-4 space-y-24 py-16">
         <Hero />
         <About />
         <Projects />

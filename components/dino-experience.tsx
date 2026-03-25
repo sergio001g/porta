@@ -2,7 +2,7 @@
 
 import { motion, useAnimation } from "framer-motion"
 import { useLanguage } from "@/components/language-provider"
-import { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 const DinoAnimation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -13,9 +13,13 @@ const DinoAnimation = () => {
 
     const ctx = canvas.getContext("2d")
     if (!ctx) return
+    const context = ctx as CanvasRenderingContext2D
 
     canvas.width = 600
     canvas.height = 150
+
+    const dinoEmoji = "🦖"
+    const cactusEmoji = "🌵"
 
     const dino = {
       x: 50,
@@ -34,38 +38,40 @@ const DinoAnimation = () => {
 
     const cubeSpeed = 3
 
-    function drawDino(y: number) {
-      ctx.fillStyle = "#535353"
-      ctx.fillRect(dino.x, y, dino.width, dino.height)
+    function drawDino(bottomY: number) {
+      const topY = bottomY - dino.height
+      context.font = "28px sans-serif"
+      context.fillText(dinoEmoji, dino.x, topY + dino.height - 4)
     }
 
     function drawCube(x: number) {
-      ctx.fillStyle = "#535353"
-      ctx.fillRect(x, cube.y, cube.size, cube.size)
+      context.font = "26px sans-serif"
+      context.fillText(cactusEmoji, x, cube.y - 2)
     }
 
     function drawGround() {
-      ctx.beginPath()
-      ctx.moveTo(0, canvas.height - 10)
-      ctx.lineTo(canvas.width, canvas.height - 10)
-      ctx.strokeStyle = "#535353"
-      ctx.stroke()
+      context.strokeStyle = "#475569"
+      context.lineWidth = 2
+      context.beginPath()
+      context.moveTo(0, canvas.height - 10)
+      context.lineTo(canvas.width, canvas.height - 10)
+      context.stroke()
+      context.fillStyle = "#334155"
+      for (let i = 0; i < 6; i++) {
+        const w = 6
+        context.fillRect((i * 110) % canvas.width, canvas.height - 12, w, 2)
+      }
     }
 
     function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      // Move cube
+      context.clearRect(0, 0, canvas.width, canvas.height)
       cube.x -= cubeSpeed
       if (cube.x < -cube.size) {
         cube.x = canvas.width
       }
-
-      // Animate dino jump
       if (cube.x <= dino.x + dino.width && cube.x + cube.size > dino.x) {
         dino.jumping = true
       }
-
       if (dino.jumping) {
         dino.jumpHeight += 5
         if (dino.jumpHeight >= 60) {
@@ -75,13 +81,10 @@ const DinoAnimation = () => {
       } else if (dino.jumpHeight > 0) {
         dino.jumpHeight -= 5
       }
-
       const dinoY = dino.y - dino.jumpHeight
-
       drawDino(dinoY)
       drawCube(cube.x)
       drawGround()
-
       requestAnimationFrame(animate)
     }
 
@@ -92,25 +95,34 @@ const DinoAnimation = () => {
 }
 
 const TwinklingDots = () => {
+  const [dots, setDots] = useState<
+    { top: number; left: number; duration: number; delay: number }[]
+  >([])
+
+  useEffect(() => {
+    const DOTS = 40
+    const positions = Array.from({ length: DOTS }).map(() => ({
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      duration: Math.random() * 2 + 1,
+      delay: Math.random() * 2,
+    }))
+    setDots(positions)
+  }, [])
+
   return (
     <div className="absolute inset-0">
-      {[...Array(50)].map((_, i) => (
+      {dots.map((d, i) => (
         <motion.div
           key={i}
           className="absolute w-[2px] h-[2px] bg-green-500/20"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            opacity: [0, 1, 0],
-            scale: [1, 1.2, 1],
-          }}
+          style={{ top: `${d.top}%`, left: `${d.left}%` }}
+          animate={{ opacity: [0, 1, 0], scale: [1, 1.2, 1] }}
           transition={{
-            duration: Math.random() * 2 + 1,
+            duration: d.duration,
             repeat: Number.POSITIVE_INFINITY,
             repeatType: "reverse",
-            delay: Math.random() * 2,
+            delay: d.delay,
           }}
         />
       ))}
@@ -137,14 +149,14 @@ const JumpingText = ({ text }: { text: string }) => {
       {text.split("").map((char, index) => (
         <motion.div
           key={index}
-          className="inline-block relative"
+          className="inline-block relative whitespace-pre"
           custom={index}
           animate={controls}
           transition={{
             delay: index * 0.05,
           }}
         >
-          {char}
+          {char === " " ? "\u00A0" : char}
           <motion.div
             className="absolute left-0 bottom-0 w-full"
             animate={{
@@ -167,6 +179,11 @@ const JumpingText = ({ text }: { text: string }) => {
 
 export default function DinoExperience() {
   const { language } = useLanguage()
+
+  const experienceTitle =
+    language === "es" ? "Prácticas preprofesionales en Kallana Tracking Tour" : "Pre-professional internship at Kallana Tracking Tour"
+  const experienceDescription =
+    language === "es" ? "Realicé el sitio informativo de la empresa." : "I built the company's informational website."
 
   return (
     <div className="relative w-full max-w-2xl mx-auto mt-8 mb-4 font-mono">
@@ -193,10 +210,10 @@ export default function DinoExperience() {
               <span className="text-green-400">experiencia.txt</span>
             </div>
             <div className="text-white/90 pl-4">
-              <JumpingText text="No tengo ;C" />
+              <JumpingText text={experienceTitle} />
             </div>
             <div className="text-white/90 pl-4">
-              <JumpingText text="Próximo a actualizar..." />
+              <JumpingText text={experienceDescription} />
             </div>
             <div className="flex items-center space-x-2 mt-4">
               <span className="text-green-400">$</span>

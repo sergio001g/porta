@@ -18,7 +18,7 @@ const StarryBackground: React.FC = () => {
 
     const stars: { x: number; y: number; radius: number; alpha: number; velocity: number }[] = []
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 60; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -31,7 +31,7 @@ const StarryBackground: React.FC = () => {
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.fillStyle = 'white'
-      ctx.globalAlpha = 0.5
+      ctx.globalAlpha = 0.25
 
       stars.forEach(star => {
         ctx.beginPath()
